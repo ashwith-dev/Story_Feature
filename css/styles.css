@@ -1,0 +1,293 @@
+/* Stories UI — custom styles beyond Tailwind utilities */
+
+:root {
+  --ring-unseen: linear-gradient(
+    135deg,
+    #f9a825 0%,
+    #f4511e 35%,
+    #e91e63 65%,
+    #c2185b 100%
+  );
+  --ring-seen: #c4c4c4;
+  --progress-track: rgba(255, 255, 255, 0.35);
+  --progress-fill: #ffffff;
+  --page-bg: #f3f0eb;
+  --page-bg-accent: #e8e2d9;
+  --tray-bg: #ffffff;
+  --ink: #1a1a1a;
+  --muted: #6b6b6b;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: "Figtree", system-ui, sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse 80% 50% at 10% -10%, #ffe8d6 0%, transparent 55%),
+    radial-gradient(ellipse 70% 45% at 100% 0%, #e4efe8 0%, transparent 50%),
+    linear-gradient(180deg, var(--page-bg) 0%, var(--page-bg-accent) 100%);
+  background-attachment: fixed;
+}
+
+/* ——— Story tray rings ——— */
+
+.story-ring {
+  display: inline-flex;
+  padding: 2.5px;
+  border-radius: 9999px;
+  background: var(--ring-seen);
+  flex-shrink: 0;
+}
+
+.story-ring.ring-unseen {
+  background: var(--ring-unseen);
+}
+
+.story-ring.ring-seen {
+  background: var(--ring-seen);
+}
+
+.story-ring__inner {
+  display: block;
+  border-radius: 9999px;
+  padding: 2px;
+  background: var(--tray-bg);
+}
+
+.story-ring__thumb {
+  display: block;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 9999px;
+  object-fit: cover;
+  background: #ddd;
+}
+
+@media (min-width: 768px) {
+  .story-ring__thumb {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+
+/* Add (+) control */
+
+.add-story {
+  width: 3.5rem;
+  height: 3.5rem;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  border: 2px dashed #b0b0b0;
+  background: #fafafa;
+  color: #555;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.add-story:hover {
+  border-color: #888;
+  background: #f0f0f0;
+  color: #222;
+}
+
+.add-story:focus-visible {
+  outline: 2px solid #f4511e;
+  outline-offset: 3px;
+}
+
+@media (min-width: 768px) {
+  .add-story {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+
+.add-story svg {
+  width: 1.35rem;
+  height: 1.35rem;
+  stroke-width: 2.25;
+}
+
+/* Tray scrollbar */
+
+.story-tray-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #d0cbc4 transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+.story-tray-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.story-tray-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.story-tray-scroll::-webkit-scrollbar-thumb {
+  background: #d0cbc4;
+  border-radius: 9999px;
+}
+
+/* ——— Viewer ——— */
+
+.viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+.viewer-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+}
+
+/* Mobile: near full-screen frame */
+.viewer-frame {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  background: #000;
+  overflow: hidden;
+}
+
+/* Desktop: centered phone 9:16 */
+@media (min-width: 768px) {
+  .viewer-frame {
+    width: min(100%, calc(90vh * 9 / 16), 420px);
+    height: min(90vh, calc(100vw * 16 / 9 * 0.9), 747px);
+    max-width: min(1080px, 100%);
+    max-height: min(1920px, 90vh);
+    border-radius: 12px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+  }
+}
+
+.viewer-image-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  background: #111;
+}
+
+.viewer-image-wrap img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  max-width: 1080px;
+  max-height: 1920px;
+  margin: auto;
+}
+
+/* Progress segments */
+
+.progress-segments {
+  display: flex;
+  gap: 4px;
+  padding: 12px 10px 8px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.progress-segment {
+  flex: 1;
+  height: 2.5px;
+  border-radius: 9999px;
+  background: var(--progress-track);
+  overflow: hidden;
+}
+
+.progress-segment__fill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: var(--progress-fill);
+  border-radius: inherit;
+}
+
+.progress-segment.is-complete .progress-segment__fill {
+  width: 100%;
+}
+
+.viewer-close {
+  position: absolute;
+  top: 1.75rem;
+  right: 0.65rem;
+  z-index: 3;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+}
+
+.viewer-close:hover {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.viewer-close:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+@media (min-width: 768px) {
+  .viewer-close {
+    top: 1.65rem;
+    right: 0.5rem;
+  }
+}
+
+.brand {
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.upload-error {
+  color: #b71c1c;
+  background: #fdecea;
+  border: 1px solid #f5c6c2;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.upload-error[hidden] {
+  display: none !important;
+}
