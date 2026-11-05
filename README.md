@@ -2,6 +2,10 @@
 
 A client-only Instagram-style Stories demo built with HTML, Tailwind CSS (CDN), and vanilla JavaScript. Stories are stored in the browser with `localStorage` — no backend required.
 
+## Live demo
+
+Live website deployed on Vercel: [https://story-pi-six.vercel.app/](https://story-pi-six.vercel.app/)
+
 ## Features
 
 - Horizontal story tray with a always-visible **+** upload control
